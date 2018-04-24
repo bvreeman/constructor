@@ -17,7 +17,9 @@ class Letter {
   // or a placeholder (like an underscore) if the letter has not been guessed
   letterGuessed() {
       if () {
-          
+
       }
   }
 }
+
+module.exports = Letter;
