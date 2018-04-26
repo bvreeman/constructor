@@ -29,5 +29,9 @@
   "directories": {
     "example": "examples"
   },
-  "dependencies": {}
+  "dependencies": {
+    "inquirer": "^5.2.0",
+    "is-letter": "^1.1.1",
+    "restify": "^7.1.1"
+  }
 }
