@@ -124,4 +124,3 @@ const hangman = {
 };
 
 hangman.startGame();
-

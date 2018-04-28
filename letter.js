@@ -11,6 +11,9 @@ const Letter = function(ltr) {
     }
     return this.letter;
   };
+  this.letterRender();
 };
 
+// const letter = new Letter(' ');
+// console.log(letter.letterRender());
 module.exports = Letter;
