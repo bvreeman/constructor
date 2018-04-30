@@ -14,17 +14,20 @@ function Word(wrd) {
   this.hiddenWord = [];
 
   this.getLetters = () => {
-    for (let ltr of this.lettersOfChosenWordArray) {
-      let letter = new Letter(ltr);
+    for (const ltr of this.lettersOfChosenWordArray) {
+      const letter = new Letter(ltr);
       this.hiddenWord.push(letter.letterRender());
     }
   };
   this.getLetters();
-  console.log(this.hiddenWord);
+  // console.log(this.hiddenWord);
+  const hiddenWordString = this.hiddenWord.toString().replace(/,/g, '');
+  console.log(hiddenWordString);
 }
 
-//https://docs.google.com/forms/d/e/1FAIpQLSdb4ejjbqoqKO-Q4k7zeO_xwykwB0dxYLWYm1mX5Ik45MzEeg/viewform
-const word = new Word('Hope it works')
+// const word = new Word('Hope it works');
+
+module.exports = Word;
 
 // function Word(wrd) {
 //   const that = this;
@@ -77,4 +80,3 @@ const word = new Word('Hope it works')
 //   };
 // }
 
-// module.exports = Word;
