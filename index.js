@@ -5,10 +5,32 @@ const isLetter = require('is-letter');
 const Word = require('./word.js');
 const newWord = require('./game.js');
 
-let guessesRemaining = 10;
-const guessedLetters = [];
-const chosenWord = newWord.wordList[Math.floor((Math.random() * newWord.wordList.length))];
 
+let guessesRemaining = 10;
+let guessedLetters = [];
+let chosenWord = newWord.wordList[Math.floor((Math.random() * newWord.wordList.length))];
+let chosenWordArray = [];
+
+// function to restart the game after either a loss or a win
+function restartGame() {
+  guessesRemaining = 10;
+  guessedLetters = [];
+  inquirer.prompt([{
+    name: 'play',
+    type: 'confirm',
+    message: 'Would you like to play again?',
+  }]).then(function(answer) {
+    if (answer.play) {
+      newGame();
+    } else {
+      console.log('\nOkay. See you another time!');
+    }
+  });
+}
+
+// This function prompts the user to input a letter and then pushes
+// it to the guessedLetters array. It also counts down the guesses
+// remaining and ends up restarting the game after a win or loss.
 
 function gamePlay() {
   if (guessesRemaining > 0) {
@@ -23,41 +45,47 @@ function gamePlay() {
         return false;
       },
     }]).then(function(ltr) {
-    //   const letterReturned = (ltr.play).toUpperCase();
-    //   let guessedAlready = false;
-    //   for (let i = 0; i < guessedLetters.length; i++) {
-    //     if (letterReturned === guessedLetters[i]) {
-    //       guessedAlready = true;
-    //     }
-    //   }
       if (ltr.guess) {
         guessedLetters.push(ltr.guess.toUpperCase());
-        console.log('<------------------------------------> \n \n');
+        console.log('\n<------------------------------------> \n \n');
         Word(chosenWord);
+        // console.log(chosenWord);
         console.log(' \n \n<------------------------------------>');
         console.log(`\n You guessed these letters \n \n${guessedLetters.join(', ')}`);
         guessesRemaining--;
         console.log(`\n You have ${guessesRemaining} guesses remaining`);
-        console.log('\n<------------------------------------>');
+        console.log('\n<------------------------------------>\n');
         gamePlay();
       }
     });
   } else {
-    console.log('You lose!');
+    console.log('You lose!\n');
+    restartGame();
   }
 }
 
+// This sets up the game in getting a new random word from my game.js file
+// It also pulls in the Word constructor from word.js in order to push
+// the dashes into the terminal.
+
 function newGame() {
   console.log(`\n You have ${guessesRemaining} guesses remaining\n`);
-  //   console.log(chosenWord);
+  chosenWord = newWord.wordList[Math.floor((Math.random() * newWord.wordList.length))];
+  chosenWordArray = chosenWord.split('');
+  console.log(chosenWordArray);
+  console.log('\n<------------------------------------> \n \n');
   Word(chosenWord);
-  console.log('\n');
+  console.log('\n<------------------------------------> \n \n');
   if (guessesRemaining > 0) {
     gamePlay();
   } else {
-    console.log('You lose');
+    console.log('You lose\n');
+    restartGame();
   }
 }
+
+// this is the function that allows the game to start in the first place.
+// It prompts the user asking if they want to play or not.
 
 function startGame() {
   console.log('\n');
@@ -69,7 +97,7 @@ function startGame() {
     if (answer.play) {
       newGame();
     } else {
-      console.log('Okay. See you another time!');
+      console.log('\nOkay. See you another time!');
     }
   });
 }
@@ -94,18 +122,6 @@ startGame();
 //     if (this.guessedLetters.length > 0) {
 //       this.guessedLetters = [];
 //     }
-
-//     inquirer.prompt([{
-//       name: 'play',
-//       type: 'confirm',
-//       message: 'Ready to play?',
-//     }]).then(function(answer) {
-//       if (answer.play) {
-//         that.newGame();
-//       } else {
-//         console.log("Fine, I didn't want to play anyway..");
-//       }
-//     });
 //   },
 //   // if they want to play starts new game.
 //   newGame: function() {
