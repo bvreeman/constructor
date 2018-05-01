@@ -3,6 +3,8 @@ const Letter = require('./letter.js');
 
 const wordBank = ['SPIDER', 'FISH', 'ANT', 'CROCODILE'];
 const chosenWord = wordBank[Math.floor((Math.random() * wordBank.length))];
+// const remainingLetters = chosenWord.length;
+
 
 // console.log(chosenWord);
 // const chosenWordLength = chosenWord.length;
@@ -19,10 +21,27 @@ function Word(wrd) {
       this.hiddenWord.push(letter.letterRender());
     }
   };
+
   this.getLetters();
   // console.log(this.hiddenWord);
   const hiddenWordString = this.hiddenWord.toString().replace(/,/g, '');
   console.log(hiddenWordString);
+
+  // this.correctGuess = () => {
+  //     const eventLocations = [];
+  //     for (let i = 0; i < hiddenWordString.length; i++) {
+  //       if (chosenWordLetters[i] === guess) {
+  //         eventLocations.push(i);
+  //         remainingLetters--;
+  //       }
+  //       if (remainingLetters === 0) {
+  //         console.log('You Win!');
+  //       }
+  //     }
+  //     for (let i = 0; i < eventLocations.length; i++) {
+  //       dashWordLength[eventLocations[i]] = guess;
+  //     }
+  //   }
 }
 
 // const word = new Word('Hope it works');

@@ -5,14 +5,77 @@ const isLetter = require('is-letter');
 const Word = require('./word.js');
 const newWord = require('./game.js');
 
-function startGame() {
-  const guessesRemaining = 10;
-  const guessedLetters = [];
-  const chosenWord = newWord.wordList[Math.floor((Math.random() * newWord.wordList.length))];
-  console.log(chosenWord);
-  Word(chosenWord);
+let guessesRemaining = 10;
+const guessedLetters = [];
+const chosenWord = newWord.wordList[Math.floor((Math.random() * newWord.wordList.length))];
+
+
+function gamePlay() {
+  if (guessesRemaining > 0) {
+    inquirer.prompt([{
+      name: 'guess',
+      type: 'input',
+      message: 'What letter would you like to guess?',
+      validate: function(value) {
+        if (isLetter(value)) {
+          return true;
+        }
+        return false;
+      },
+    }]).then(function(ltr) {
+    //   const letterReturned = (ltr.play).toUpperCase();
+    //   let guessedAlready = false;
+    //   for (let i = 0; i < guessedLetters.length; i++) {
+    //     if (letterReturned === guessedLetters[i]) {
+    //       guessedAlready = true;
+    //     }
+    //   }
+      if (ltr.guess) {
+        guessedLetters.push(ltr.guess.toUpperCase());
+        console.log('<------------------------------------> \n \n');
+        Word(chosenWord);
+        console.log(' \n \n<------------------------------------>');
+        console.log(`\n You guessed these letters \n \n${guessedLetters.join(', ')}`);
+        guessesRemaining--;
+        console.log(`\n You have ${guessesRemaining} guesses remaining`);
+        console.log('\n<------------------------------------>');
+        gamePlay();
+      }
+    });
+  } else {
+    console.log('You lose!');
+  }
 }
+
+function newGame() {
+  console.log(`\n You have ${guessesRemaining} guesses remaining\n`);
+  //   console.log(chosenWord);
+  Word(chosenWord);
+  console.log('\n');
+  if (guessesRemaining > 0) {
+    gamePlay();
+  } else {
+    console.log('You lose');
+  }
+}
+
+function startGame() {
+  console.log('\n');
+  inquirer.prompt([{
+    name: 'play',
+    type: 'confirm',
+    message: 'Would you like to play?',
+  }]).then(function(answer) {
+    if (answer.play) {
+      newGame();
+    } else {
+      console.log('Okay. See you another time!');
+    }
+  });
+}
+
 startGame();
+
 
 // set the maxListener
 // require('events').EventEmitter.prototype.maxListeners = 100;
