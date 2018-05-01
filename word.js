@@ -13,60 +13,38 @@ function Word(wrd) {
       this.hiddenWord.push(letter.letterRender());
     }
   };
+
+  this.getLetters();
+  // console.log(this.hiddenWord);
+  const hiddenWordString = this.hiddenWord.toString().replace(/,/g, '');
+  console.log(hiddenWordString);
+
+  // checks to see if letter is in the word
+  this.checkIfLetterFound = function (guessedLetter) {
+    let whatToReturn = 0;
+
+    // iterates through each letter to see if it matches the guessed letter
+    this.letters.forEach(function (lttr) {
+      if (lttr.letter === guessedLetter) {
+        lttr.appear = true;
+        whatToReturn++;
+      }
+    });
+
+    return whatToReturn;
+  };
+
+  this.wordRender = function () {
+    let display = '';
+
+    this.letters.forEach(function (lttr) {
+      const currentLetter = lttr.letterRender();
+      display += currentLetter;
+    });
+    return display;
+  };
 }
 
 // const word = new Word('Hope it works');
 
 module.exports = Word;
-
-// function Word(wrd) {
-//   const that = this;
-//   // store the string wrd
-//   this.word = wrd;
-//   // collection of letter objects
-//   this.letters = [];
-//   this.wordFound = false;
-
-//   this.getLets = function() {
-//     // populate the collection above with new Letter objects
-//     for (let i = 0; i < that.word.length; i++) {
-//       const newLetter = new Letter(that.word[i]);
-//       this.letters.push(newLetter);
-//     }
-//   };
-
-//   // found the current word
-//   this.didWeFindTheWord = function() {
-//     if (this.letters.every(function(lttr) {
-//       return lttr.appear === true;
-//     })) {
-//       this.wordFound = true;
-//       return true;
-//     }
-//   };
-
-//   this.checkIfLetterFound = function(guessedLetter) {
-//     let whatToReturn = 0;
-//     // iterates through each letter to see if it matches the guessed letter
-//     this.letters.forEach(function(lttr) {
-//       if (lttr.letter === guessedLetter) {
-//         lttr.appear = true;
-//         whatToReturn++;
-//       }
-//     });
-//     // if guessLetter matches Letter property, the letter object should be shown
-//     return whatToReturn;
-//   };
-
-//   this.wordRender = function() {
-//     let display = '';
-//     // render the word based on if letters are found or not
-//     that.letters.forEach(function(lttr) {
-//       const currentLetter = lttr.letterRender();
-//       display += currentLetter;
-//     });
-
-//     return display;
-//   };
-// }
-
